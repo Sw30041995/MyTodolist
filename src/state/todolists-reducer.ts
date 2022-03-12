@@ -27,7 +27,10 @@ type ChangeTodoListTitleActionType = {
     newTitle: string
 }
 
-export const todoListsReducer = (state: Array<TodoListType>, action: ActionType): Array<TodoListType> => {
+const initialState: Array<TodoListType> = []
+
+
+export const todoListsReducer = (state = initialState, action: ActionType): Array<TodoListType> => {
     switch (action.type) {
         case "ADD-TODOLIST":
             return [{id: action.todoListId, title: action.todoListTitle, filter: 'all'}, ...state]

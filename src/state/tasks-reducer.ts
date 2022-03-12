@@ -34,7 +34,9 @@ type ChangeTaskTitleActionType = {
     newTitle: string
 }
 
-export const tasksReducer = (state: TasksType, action: ActionType): TasksType => {
+const initialState: TasksType = {}
+
+export const tasksReducer = (state = initialState, action: ActionType): TasksType => {
     switch (action.type) {
         case "ADD-TODOLIST":
             return {...state, [action.todoListId]: []}
