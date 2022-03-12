@@ -6,37 +6,34 @@ type PropsType = {
 
 export const AddItemForm = (props: PropsType) => {
 
-    let [error, setError] = useState<string>('')
-    const [titleForTask, setTitleForTask] = useState('')
+    const [title, setTitle] = useState<string>('')
+    const [error, setError] = useState<string>('')
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const taskTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
         setError('')
-        setTitleForTask(e.currentTarget.value)
     }
 
     const addItem = () => {
-        if (titleForTask.trim() !== '') {
-            props.addItem(titleForTask.trim())
-            setTitleForTask('')
+        if (title.trim() !== '') {
+            props.addItem(title.trim())
+            setTitle('')
         } else {
-            error = 'Task name cannot be empty!'
-            setError(error)
+            setError('Title is required!')
         }
     }
 
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.code === 'Enter') {
+    const addTaskWhenPressingEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
             addItem()
         }
     }
-
     return (
-        <div>
-            <input className={error ? 'error' : ''} value={titleForTask} type='text' onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}/>
-            <button onClick={addItem}>+</button>
-            {error && <div className={error ? 'error-message' : ''}>{error}</div>}
-        </div>
+            <div>
+                <input className={error ? 'error' : ''} onKeyPress={addTaskWhenPressingEnter} value={title}
+                       onChange={taskTitleChangeHandler}/>
+                <button onClick={addItem}>+</button>
+                {error && <div className='errorMessage'>{error}</div>}
+            </div>
     );
 };
-
